@@ -179,6 +179,9 @@ plugin_manager remove_bundle target=dsh-plugin-auto-lwf-sr
 设置 → 插件（Plugin Manager）→ Bundles，把「自动变祖器 / dsh-plugin-auto-lwf-sr」重新打开即可。
 （我这边遇到过 DSH 更新到 0.2.1-rc.3 后，三个第三方 bundle 全被关掉；重新启用后 Host 行 `active`、挂件恢复。）
 
+如果插件页显示 **`incompatible-version`**，那是 `engines.dsh` 护栏在起作用（当前允许 `>=0.2.1-rc.2 <0.3.0`）：
+说明你升级到了范围外的 DSH 版本，需要等插件适配后再装，或者自行授予 exact-version exemption（有崩溃风险）。
+
 **分数长时间不动？**
 面板页脚有时间戳（精确到秒）。若显示「部分数据源降级」，说明状态/榜单/价格接口暂时不可用，会沿用上次成功值；点「↻」可强制重采。
 
@@ -212,8 +215,12 @@ plugin_manager remove_bundle target=dsh-plugin-auto-lwf-sr
 ## 兼容性与测试
 
 - 运行环境：DeepSeek Harness Desktop（desktop profile，2026-10 版本实测）；Node ≥ 22（仅开发需要）。
-- 插件依赖 DSH 的 `connection.fetch` 与 Client Slot 机制，DSH 大版本升级可能改变接口，请以实际版本为准。
-- CI 会跑：所有模块语法检查、评分/分级/上限单元测试、jsdom 渲染 + 交互冒烟测试。
+- **版本护栏**：`plugin/package.json` 声明了
+  `"engines.dsh": ">=0.2.1-rc.2 <0.3.0"`。DSH 在安装、启动和每次 profile 重组时按运行时版本检查：
+  不满足会**拒绝安装 / 跳过该 bundle**，并在插件管理里报 `incompatible-version`（列出版本与未满足的 range）；
+  确实要跑可以授予 exact-version exemption，但那只跳过检查、不保证兼容，风险自负。
+- 最高支持到 `0.2.x`：本插件依赖 DSH 的 `connection.fetch` 与 Client Slot 接口，`0.3.0` 起需要重新验证后再放宽。
+- CI 会跑：所有模块语法检查、评分/分级/上限单元测试、**manifest 契约测试（含 `engines.dsh`）**、jsdom 渲染 + 交互冒烟测试。
 
 ## 已知限制 / Roadmap
 

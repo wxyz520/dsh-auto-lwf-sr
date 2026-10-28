@@ -1,6 +1,6 @@
 {
   "name": "dsh-plugin-auto-lwf-sr",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "自动变祖器：按 DeepSeek 服务稳定度、模型评分与百万 token 价格实时计算变祖指数，滑到小难梁→梁祖六档。",
   "type": "module",
@@ -52,6 +52,7 @@
     "cordis"
   ],
   "engines": {
-    "node": ">=22"
+    "node": ">=22",
+    "dsh": ">=0.2.1-rc.2 <0.3.0"
   }
 }
