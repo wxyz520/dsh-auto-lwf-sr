@@ -80,8 +80,11 @@ plugin_manager install_bundle target=/absolute/path/to/dsh-auto-lwf-sr/plugin
 #          选择上面的 plugin/ 目录
 ```
 
-> ⚠️ `target` 必须指向 clone 下来的 **`plugin/` 子目录**，不是仓库根目录。
+ > ⚠️ `target` 必须指向 clone 下来的 **`plugin/` 子目录**，不是仓库根目录。
 > 仓库根目录是开发脚手架（`package.json` 只有测试脚本、没有 `dsh.bundle`），装根目录会失败或看起来"没装上"。
+>
+> 如果提示 **`already-installed`**：说明当前 profile 里已经有一份（比如开发目录的 link），
+> 先执行 `plugin_manager remove_bundle target=dsh-plugin-auto-lwf-sr`（或插件管理界面里先卸载），再重新安装。
 
 安装成功后右下角出现挂件（默认留出底部的一段空间，避免和右下角已有的挂件挤在一起；被挡住就直接拖开）。
 
