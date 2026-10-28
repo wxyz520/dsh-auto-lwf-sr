@@ -1108,8 +1108,8 @@ const TIER_ART = ART_TIERS.map(({ id, name, svg }) => ({
         : 100
 
       const settingsBody = [
-        h('div', { key: 'set-mode', style: { padding: '2px 0 16px' } }, [
-          h('div', { key: 'label', style: { fontSize: 11.5, fontWeight: 700, marginBottom: 8 } }, t.settingMode),
+        h('div', { key: 'set-mode', style: { padding: '0 0 18px' } }, [
+          h('div', { key: 'label', style: { fontSize: 12, fontWeight: 700, marginBottom: 10 } }, t.settingMode),
           h('div', { key: 'seg', style: { display: 'flex', gap: 4, padding: 4, borderRadius: 10, background: T.bg2, border: '1px solid ' + T.border } },
             [['pill', t.modePill], ['sticker', t.modeSticker]].map(([value, label]) => h('button', {
               key: 'set-mode-' + value,
@@ -1131,8 +1131,8 @@ const TIER_ART = ART_TIERS.map(({ id, name, svg }) => ({
               },
             }, label))),
         ]),
-        h('div', { key: 'set-size', style: { padding: '16px 0', borderTop: '1px solid ' + T.border } }, [
-          h('div', { key: 'line', style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', fontSize: 11.5, fontWeight: 700, marginBottom: 8 } }, [
+        h('div', { key: 'set-size', style: { padding: '18px 0', borderTop: '1px solid ' + T.border } }, [
+          h('div', { key: 'line', style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', fontSize: 12, fontWeight: 700, marginBottom: 10 } }, [
             h('span', { key: 'l' }, t.settingSize),
             h('span', { key: 'v', style: { fontSize: 10.5, color: T.dim, fontVariantNumeric: 'tabular-nums' } }, avatarSize + ' px'),
           ]),
@@ -1155,11 +1155,11 @@ const TIER_ART = ART_TIERS.map(({ id, name, svg }) => ({
               opacity: mode === 'sticker' ? 1 : 0.45,
             },
           }),
-          h('div', { key: 'hint', style: { marginTop: 6, fontSize: 10, color: T.dim, lineHeight: 1.5 } },
+          h('div', { key: 'hint', style: { marginTop: 8, fontSize: 10.5, color: T.dim, lineHeight: 1.6 } },
             mode === 'sticker' ? t.settingSizeHint : t.settingSizePillHint),
         ]),
-        h('div', { key: 'set-pos', style: { padding: '16px 0', borderTop: '1px solid ' + T.border } }, [
-          h('div', { key: 'line', style: { display: 'flex', alignItems: 'center', gap: 8, fontSize: 11.5, fontWeight: 700 } }, [
+        h('div', { key: 'set-pos', style: { padding: '18px 0', borderTop: '1px solid ' + T.border } }, [
+          h('div', { key: 'line', style: { display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, fontWeight: 700 } }, [
             h('span', { key: 'l' }, t.settingPosition),
             h('span', { key: 'v', style: { fontSize: 10, color: T.dim, fontWeight: 400, fontVariantNumeric: 'tabular-nums' } },
               '↘ ' + Math.round(pos.right) + ' · ' + Math.round(pos.bottom)),
@@ -1175,9 +1175,9 @@ const TIER_ART = ART_TIERS.map(({ id, name, svg }) => ({
               },
             }, t.resetPosition),
           ]),
-          h('div', { key: 'hint', style: { marginTop: 6, fontSize: 10, color: T.dim, lineHeight: 1.5 } }, t.dragHintWidget),
+          h('div', { key: 'hint', style: { marginTop: 8, fontSize: 10.5, color: T.dim, lineHeight: 1.6 } }, t.dragHintWidget),
         ]),
-        h('div', { key: 'set-note', style: { fontSize: 10, color: T.dim, lineHeight: 1.7, paddingTop: 4 } }, t.settingsNote),
+        h('div', { key: 'set-note', style: { fontSize: 10.5, color: T.dim, lineHeight: 1.7, paddingTop: 6 } }, t.settingsNote),
       ]
 
       const settingsOverlay = h('div', {
@@ -1185,13 +1185,9 @@ const TIER_ART = ART_TIERS.map(({ id, name, svg }) => ({
         'data-lwf-settings': 'true',
         className: 'lwf-rise',
         style: {
-          position: 'absolute',
-          inset: 0,
-          background: T.overlay,
-          backdropFilter: 'blur(18px)',
-          padding: '14px 2px 10px',
+          padding: '16px 20px 18px',
           overflowY: 'auto',
-          borderRadius: '12px 12px 16px 16px',
+          maxHeight: 'min(560px, calc(100vh - 240px))',
         },
       }, settingsBody)
 
@@ -1206,8 +1202,8 @@ const TIER_ART = ART_TIERS.map(({ id, name, svg }) => ({
           position: 'absolute',
           right: 0,
           ...(panelBelow ? { top: 'calc(100% + 12px)' } : { bottom: 'calc(100% + 12px)' }),
-          width: 372,
-          maxWidth: 'min(372px, calc(100vw - 24px))',
+          width: 400,
+          maxWidth: 'min(400px, calc(100vw - 24px))',
           maxHeight: (panelBelow
             ? 'min(560px, ' + Math.max(200, Math.round(pos.bottom - 24)) + 'px)'
             : 'min(560px, ' + Math.max(200, Math.round(window.innerHeight - pos.bottom - 96)) + 'px)'),
@@ -1227,7 +1223,7 @@ const TIER_ART = ART_TIERS.map(({ id, name, svg }) => ({
           overflow: 'hidden',
         },
       }, [
-        h('div', { key: 'head', style: { display: 'flex', alignItems: 'center', gap: 8, padding: '14px 16px 10px' } }, [
+        h('div', { key: 'head', style: { display: 'flex', alignItems: 'center', gap: 8, padding: '16px 20px 12px' } }, [
           h('span', { key: 'dot', className: 'lwf-breathe', title: statusLabel(statusLevel, locale), style: { width: 6, height: 6, borderRadius: '50%', background: statusTone } }),
           h('span', { key: 'title', style: { fontSize: 12.5, fontWeight: 750, letterSpacing: '.02em' } }, showSettings ? t.settings : t.title),
           h('span', { key: 'spacer', style: { flex: 1 } }),
@@ -1275,7 +1271,7 @@ const TIER_ART = ART_TIERS.map(({ id, name, svg }) => ({
             },
           }, '✕'),
         ]),
-        h('div', { key: 'body', style: { padding: '0 16px 14px', overflowY: 'auto', position: 'relative' } }, [
+        h('div', { key: 'body', 'data-lwf-body': 'true', style: { padding: '0 20px 18px', overflowY: 'auto', position: 'relative', display: showSettings ? 'none' : 'block' } }, [
           h('div', { key: 'hero', style: { display: 'flex', gap: 12, alignItems: 'center' } }, [
             h(TierImage, { key: 'art', index: shownIndex, size: 74, radius: 16, ringColor: amber + '77', className: preview ? 'lwf-pop' : undefined }),
             h('div', { key: 'info', style: { minWidth: 0, flex: 1 } }, [
@@ -1389,8 +1385,8 @@ const TIER_ART = ART_TIERS.map(({ id, name, svg }) => ({
             h('span', { key: 'updated', style: { fontVariantNumeric: 'tabular-nums' } },
               snap ? t.updated + ' ' + formatClock(snap.updatedAt, locale) : ''),
           ]),
-          showSettings ? settingsOverlay : null,
         ]),
+        showSettings ? settingsOverlay : null,
       ])
 
       return h('div', {
