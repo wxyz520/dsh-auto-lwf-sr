@@ -129,24 +129,6 @@ const ART_TIERS = [
     ),
   },
   {
-    id: 'liangshen',
-    name: '梁神',
-    // Tier 4 — tech sage: black high-neck sweater, faint cyan halo ring and
-    // sparkles, glowing chest diamond, calm smile.
-    svg: G(
-      `<circle cx="60" cy="58" r="46" fill="#5AD7E0" opacity=".09"/>`,
-      `<circle cx="60" cy="26" r="12" fill="none" stroke="#7FE3E8" stroke-width="2.5" opacity=".7"/>`,
-      TORSO('#1E2027'),
-      `<path d="M50.5 68 C50.5 55 69.5 55 69.5 68 L69.5 70 L50.5 70 Z" fill="#2A2D38"/>`,
-      `<path d="M34 105 L86 105" stroke="#2A2D38" stroke-width="3"/>`,
-      `<path d="M60 80 L65 87 L60 94 L55 87 Z" fill="#7FE3E8" opacity=".9"/>`,
-      HEAD,
-      `<path d="M85 35 L86.3 38.2 L89.5 39.5 L86.3 40.8 L85 44 L83.7 40.8 L80.5 39.5 L83.7 38.2 Z" fill="#BFF6F8" opacity=".9"/>`,
-      `<path d="M34 38 L34.9 40.1 L37 41 L34.9 41.9 L34 44 L33.1 41.9 L31 41 L33.1 40.1 Z" fill="#BFF6F8" opacity=".7"/>`,
-      FACE({ mouth: 'smile' }),
-    ),
-  },
-  {
     id: 'liangsheng',
     name: '梁圣',
     // Tier 5 — saint: white robe with wide sleeves and gold trim, golden
@@ -166,6 +148,24 @@ const ART_TIERS = [
       `<path d="M94.5 104 L87.5 104" stroke="#E8C86A" stroke-width="3"/>`,
       HEAD,
       FACE({ eyes: 'closed', mouth: 'smile' }),
+    ),
+  },
+  {
+    id: 'liangshen',
+    name: '梁神',
+    // Tier 4 — tech sage: black high-neck sweater, faint cyan halo ring and
+    // sparkles, glowing chest diamond, calm smile.
+    svg: G(
+      `<circle cx="60" cy="58" r="46" fill="#5AD7E0" opacity=".09"/>`,
+      `<circle cx="60" cy="26" r="12" fill="none" stroke="#7FE3E8" stroke-width="2.5" opacity=".7"/>`,
+      TORSO('#1E2027'),
+      `<path d="M50.5 68 C50.5 55 69.5 55 69.5 68 L69.5 70 L50.5 70 Z" fill="#2A2D38"/>`,
+      `<path d="M34 105 L86 105" stroke="#2A2D38" stroke-width="3"/>`,
+      `<path d="M60 80 L65 87 L60 94 L55 87 Z" fill="#7FE3E8" opacity=".9"/>`,
+      HEAD,
+      `<path d="M85 35 L86.3 38.2 L89.5 39.5 L86.3 40.8 L85 44 L83.7 40.8 L80.5 39.5 L83.7 38.2 Z" fill="#BFF6F8" opacity=".9"/>`,
+      `<path d="M34 38 L34.9 40.1 L37 41 L34.9 41.9 L34 44 L33.1 41.9 L31 41 L33.1 40.1 Z" fill="#BFF6F8" opacity=".7"/>`,
+      FACE({ mouth: 'smile' }),
     ),
   },
   {
@@ -223,8 +223,8 @@ const TIER_ART = ART_TIERS.map(({ id, name, svg }) => ({
       { id: 'xiaonanliang', name: '小难梁', tagline: '勉强能跑，别问好不好用', enTagline: 'barely running', accent: '#8A93A8' },
       { id: 'laoliang', name: '牢梁', tagline: '能用，但也只限于能用', enTagline: 'it works, that is all', accent: '#5C7CA8' },
       { id: 'liangzi', name: '梁子', tagline: '稳中有升，值得处', enTagline: 'steady and rising', accent: '#3F5F8C' },
-      { id: 'liangshen', name: '梁神', tagline: '发挥稳定，封神在望', enTagline: 'on the way to godhood', accent: '#2FB6C6' },
       { id: 'liangsheng', name: '梁圣', tagline: '业界标杆，圣光普照', enTagline: 'the industry standard', accent: '#D9A441' },
+      { id: 'liangshen', name: '梁神', tagline: '发挥稳定，封神在望', enTagline: 'on the way to godhood', accent: '#2FB6C6' },
       { id: 'liangzu', name: '梁祖', tagline: '万祖归一，祖上显灵', enTagline: 'all ancestors, one throne', accent: '#C0392B' },
     ]
     const VARIANT_HINTS = {
@@ -1108,9 +1108,9 @@ const TIER_ART = ART_TIERS.map(({ id, name, svg }) => ({
         : 100
 
       const settingsBody = [
-        h('div', { key: 'set-mode', style: { padding: '4px 0 10px' } }, [
-          h('div', { key: 'label', style: { fontSize: 11, fontWeight: 700, marginBottom: 6 } }, t.settingMode),
-          h('div', { key: 'seg', style: { display: 'flex', gap: 4, padding: 3, borderRadius: 10, background: T.bg2, border: '1px solid ' + T.border } },
+        h('div', { key: 'set-mode', style: { padding: '2px 0 16px' } }, [
+          h('div', { key: 'label', style: { fontSize: 11.5, fontWeight: 700, marginBottom: 8 } }, t.settingMode),
+          h('div', { key: 'seg', style: { display: 'flex', gap: 4, padding: 4, borderRadius: 10, background: T.bg2, border: '1px solid ' + T.border } },
             [['pill', t.modePill], ['sticker', t.modeSticker]].map(([value, label]) => h('button', {
               key: 'set-mode-' + value,
               type: 'button',
@@ -1119,8 +1119,8 @@ const TIER_ART = ART_TIERS.map(({ id, name, svg }) => ({
               style: {
                 font: 'inherit',
                 flex: 1,
-                fontSize: 11,
-                padding: '5px 0',
+                fontSize: 11.5,
+                padding: '7px 0',
                 border: 'none',
                 borderRadius: 7,
                 cursor: 'pointer',
@@ -1131,8 +1131,8 @@ const TIER_ART = ART_TIERS.map(({ id, name, svg }) => ({
               },
             }, label))),
         ]),
-        h('div', { key: 'set-size', style: { padding: '0 0 10px' } }, [
-          h('div', { key: 'line', style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', fontSize: 11, fontWeight: 700, marginBottom: 6 } }, [
+        h('div', { key: 'set-size', style: { padding: '16px 0', borderTop: '1px solid ' + T.border } }, [
+          h('div', { key: 'line', style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', fontSize: 11.5, fontWeight: 700, marginBottom: 8 } }, [
             h('span', { key: 'l' }, t.settingSize),
             h('span', { key: 'v', style: { fontSize: 10.5, color: T.dim, fontVariantNumeric: 'tabular-nums' } }, avatarSize + ' px'),
           ]),
@@ -1149,16 +1149,17 @@ const TIER_ART = ART_TIERS.map(({ id, name, svg }) => ({
             onChange: event => setAvatarSize(clamp(Number(event.target.value) || 88, SIZE_MIN, SIZE_MAX)),
             style: {
               width: '100%',
+              marginTop: 2,
               accentColor: amber,
               cursor: mode === 'sticker' ? 'pointer' : 'not-allowed',
               opacity: mode === 'sticker' ? 1 : 0.45,
             },
           }),
-          h('div', { key: 'hint', style: { marginTop: 4, fontSize: 9.5, color: T.dim } },
+          h('div', { key: 'hint', style: { marginTop: 6, fontSize: 10, color: T.dim, lineHeight: 1.5 } },
             mode === 'sticker' ? t.settingSizeHint : t.settingSizePillHint),
         ]),
-        h('div', { key: 'set-pos', style: { padding: '0 0 10px' } }, [
-          h('div', { key: 'line', style: { display: 'flex', alignItems: 'center', gap: 8, fontSize: 11, fontWeight: 700 } }, [
+        h('div', { key: 'set-pos', style: { padding: '16px 0', borderTop: '1px solid ' + T.border } }, [
+          h('div', { key: 'line', style: { display: 'flex', alignItems: 'center', gap: 8, fontSize: 11.5, fontWeight: 700 } }, [
             h('span', { key: 'l' }, t.settingPosition),
             h('span', { key: 'v', style: { fontSize: 10, color: T.dim, fontWeight: 400, fontVariantNumeric: 'tabular-nums' } },
               '↘ ' + Math.round(pos.right) + ' · ' + Math.round(pos.bottom)),
@@ -1174,9 +1175,9 @@ const TIER_ART = ART_TIERS.map(({ id, name, svg }) => ({
               },
             }, t.resetPosition),
           ]),
-          h('div', { key: 'hint', style: { marginTop: 4, fontSize: 9.5, color: T.dim } }, t.dragHintWidget),
+          h('div', { key: 'hint', style: { marginTop: 6, fontSize: 10, color: T.dim, lineHeight: 1.5 } }, t.dragHintWidget),
         ]),
-        h('div', { key: 'set-note', style: { fontSize: 9.5, color: T.dim, lineHeight: 1.5 } }, t.settingsNote),
+        h('div', { key: 'set-note', style: { fontSize: 10, color: T.dim, lineHeight: 1.7, paddingTop: 4 } }, t.settingsNote),
       ]
 
       const settingsOverlay = h('div', {
@@ -1188,7 +1189,7 @@ const TIER_ART = ART_TIERS.map(({ id, name, svg }) => ({
           inset: 0,
           background: T.overlay,
           backdropFilter: 'blur(18px)',
-          padding: '10px 0 0',
+          padding: '14px 2px 10px',
           overflowY: 'auto',
           borderRadius: '12px 12px 16px 16px',
         },
@@ -1205,8 +1206,8 @@ const TIER_ART = ART_TIERS.map(({ id, name, svg }) => ({
           position: 'absolute',
           right: 0,
           ...(panelBelow ? { top: 'calc(100% + 12px)' } : { bottom: 'calc(100% + 12px)' }),
-          width: 356,
-          maxWidth: 'min(356px, calc(100vw - 24px))',
+          width: 372,
+          maxWidth: 'min(372px, calc(100vw - 24px))',
           maxHeight: (panelBelow
             ? 'min(560px, ' + Math.max(200, Math.round(pos.bottom - 24)) + 'px)'
             : 'min(560px, ' + Math.max(200, Math.round(window.innerHeight - pos.bottom - 96)) + 'px)'),
@@ -1226,7 +1227,7 @@ const TIER_ART = ART_TIERS.map(({ id, name, svg }) => ({
           overflow: 'hidden',
         },
       }, [
-        h('div', { key: 'head', style: { display: 'flex', alignItems: 'center', gap: 8, padding: '12px 14px 8px' } }, [
+        h('div', { key: 'head', style: { display: 'flex', alignItems: 'center', gap: 8, padding: '14px 16px 10px' } }, [
           h('span', { key: 'dot', className: 'lwf-breathe', title: statusLabel(statusLevel, locale), style: { width: 6, height: 6, borderRadius: '50%', background: statusTone } }),
           h('span', { key: 'title', style: { fontSize: 12.5, fontWeight: 750, letterSpacing: '.02em' } }, showSettings ? t.settings : t.title),
           h('span', { key: 'spacer', style: { flex: 1 } }),
@@ -1274,7 +1275,7 @@ const TIER_ART = ART_TIERS.map(({ id, name, svg }) => ({
             },
           }, '✕'),
         ]),
-        h('div', { key: 'body', style: { padding: '0 14px 12px', overflowY: 'auto', position: 'relative' } }, [
+        h('div', { key: 'body', style: { padding: '0 16px 14px', overflowY: 'auto', position: 'relative' } }, [
           h('div', { key: 'hero', style: { display: 'flex', gap: 12, alignItems: 'center' } }, [
             h(TierImage, { key: 'art', index: shownIndex, size: 74, radius: 16, ringColor: amber + '77', className: preview ? 'lwf-pop' : undefined }),
             h('div', { key: 'info', style: { minWidth: 0, flex: 1 } }, [

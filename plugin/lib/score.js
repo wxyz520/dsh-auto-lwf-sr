@@ -13,8 +13,8 @@ export const TIERS = [
   { id: 'xiaonanliang', name: '小难梁', min: 0, tagline: '勉强能跑，别问好不好用' },
   { id: 'laoliang', name: '牢梁', min: 18, tagline: '能用，但也只限于能用' },
   { id: 'liangzi', name: '梁子', min: 34, tagline: '稳中有升，值得处' },
-  { id: 'liangshen', name: '梁神', min: 50, tagline: '发挥稳定，封神在望' },
-  { id: 'liangsheng', name: '梁圣', min: 66, tagline: '业界标杆，圣光普照' },
+  { id: 'liangsheng', name: '梁圣', min: 50, tagline: '业界标杆，圣光普照' },
+  { id: 'liangshen', name: '梁神', min: 66, tagline: '发挥稳定，封神在望' },
   { id: 'liangzu', name: '梁祖', min: 82, tagline: '万祖归一，祖上显灵' },
 ]
 
@@ -27,7 +27,7 @@ export const DEFAULT_WEIGHTS = { stability: 0.5, quality: 0.3, price: 0.2 }
  */
 export const STATUS_CAPS = {
   operational: 100,
-  maintenance: 81.9,   // 梁圣
+  maintenance: 81.9,   // 梁神
   degraded: 49.9,      // 梁子：异常就不该还停在梁神
   partial_outage: 33.9, // 牢梁：部分中断
   full_outage: 8,      // 小难梁：全面中断

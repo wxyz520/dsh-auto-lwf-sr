@@ -132,24 +132,6 @@ const TIERS = [
     ),
   },
   {
-    id: 'liangshen',
-    name: '梁神',
-    // Tier 4 — tech sage: black high-neck sweater, faint cyan halo ring and
-    // sparkles, glowing chest diamond, calm smile.
-    svg: G(
-      `<circle cx="60" cy="58" r="46" fill="#5AD7E0" opacity=".09"/>`,
-      `<circle cx="60" cy="26" r="12" fill="none" stroke="#7FE3E8" stroke-width="2.5" opacity=".7"/>`,
-      TORSO('#1E2027'),
-      `<path d="M50.5 68 C50.5 55 69.5 55 69.5 68 L69.5 70 L50.5 70 Z" fill="#2A2D38"/>`,
-      `<path d="M34 105 L86 105" stroke="#2A2D38" stroke-width="3"/>`,
-      `<path d="M60 80 L65 87 L60 94 L55 87 Z" fill="#7FE3E8" opacity=".9"/>`,
-      HEAD,
-      `<path d="M85 35 L86.3 38.2 L89.5 39.5 L86.3 40.8 L85 44 L83.7 40.8 L80.5 39.5 L83.7 38.2 Z" fill="#BFF6F8" opacity=".9"/>`,
-      `<path d="M34 38 L34.9 40.1 L37 41 L34.9 41.9 L34 44 L33.1 41.9 L31 41 L33.1 40.1 Z" fill="#BFF6F8" opacity=".7"/>`,
-      FACE({ mouth: 'smile' }),
-    ),
-  },
-  {
     id: 'liangsheng',
     name: '梁圣',
     // Tier 5 — saint: white robe with wide sleeves and gold trim, golden
@@ -169,6 +151,24 @@ const TIERS = [
       `<path d="M94.5 104 L87.5 104" stroke="#E8C86A" stroke-width="3"/>`,
       HEAD,
       FACE({ eyes: 'closed', mouth: 'smile' }),
+    ),
+  },
+  {
+    id: 'liangshen',
+    name: '梁神',
+    // Tier 4 — tech sage: black high-neck sweater, faint cyan halo ring and
+    // sparkles, glowing chest diamond, calm smile.
+    svg: G(
+      `<circle cx="60" cy="58" r="46" fill="#5AD7E0" opacity=".09"/>`,
+      `<circle cx="60" cy="26" r="12" fill="none" stroke="#7FE3E8" stroke-width="2.5" opacity=".7"/>`,
+      TORSO('#1E2027'),
+      `<path d="M50.5 68 C50.5 55 69.5 55 69.5 68 L69.5 70 L50.5 70 Z" fill="#2A2D38"/>`,
+      `<path d="M34 105 L86 105" stroke="#2A2D38" stroke-width="3"/>`,
+      `<path d="M60 80 L65 87 L60 94 L55 87 Z" fill="#7FE3E8" opacity=".9"/>`,
+      HEAD,
+      `<path d="M85 35 L86.3 38.2 L89.5 39.5 L86.3 40.8 L85 44 L83.7 40.8 L80.5 39.5 L83.7 38.2 Z" fill="#BFF6F8" opacity=".9"/>`,
+      `<path d="M34 38 L34.9 40.1 L37 41 L34.9 41.9 L34 44 L33.1 41.9 L31 41 L33.1 40.1 Z" fill="#BFF6F8" opacity=".7"/>`,
+      FACE({ mouth: 'smile' }),
     ),
   },
   {
