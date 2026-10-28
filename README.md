@@ -240,6 +240,20 @@ node scripts/embed-meme.mjs path/to/own-six.png      # 换自己的六格图
 
 > 提交前请确认你对所用素材拥有权利；公开仓库里的梗图随时可以被移除，但代码不受影响。
 
+## 致谢 / Credits
+
+- 「滑动变祖器」的概念与「小难梁 → … → 梁祖」六格升格梗，灵感来自 X 上的
+  [@Lichtspektrum](https://x.com/lichtspektrum) 的原项目
+  [Lichtspektrum/liang-intensity-calibrator](https://github.com/Lichtspektrum/liang-intensity-calibrator)
+  （31 级梁系强度校准器，代码 MIT；其 README 明确说明人像素材不随 MIT 共享、复用前需确认肖像与素材使用权）。
+- 本仓库是一个独立的 DSH 实现：把滑杆接到 DeepSeek 的实时状态、模型评分与价格上；
+  未复用原项目代码。六档 SVG 立绘为本仓库原创，随仓库的梗图贴纸为网络流传版本（非 MIT，见「立绘与版权」）。
+- 数据来源：[DeepSeek Status](https://status.deepseek.com/)、
+  [Artificial Analysis](https://artificialanalysis.ai/leaderboards/models)、
+  [OpenRouter](https://openrouter.ai/api/v1/models)。
+- 也感谢 [Awesome Sliders](https://github.com/Lichtspektrum/liang-intensity-calibrator#awesome-sliders)
+  里各位二创作者带来的灵感。
+
 ## 贡献
 
 欢迎 issue / PR：数据源解析修补、组件权重、时长衰减、英文文案、截图都欢迎。
