@@ -73,8 +73,10 @@
   - 四个 tab：**因子**（稳定/实力/价格三条进度）、**评分**（Artificial Analysis 对照表）、**价格**（OpenRouter 百万 token 价目）、**走势**（最近 120 次采样折线）；
   - 页脚：数据源链接 + 更新时间 + 刷新按钮；点面板外或 Esc 收起。
 - **动效**：面板缩放/位移进场、分数滚动计数、滑片回弹、档位切换气泡、控件 hover/按下反馈；`prefers-reduced-motion` 下自动关闭动画。
-- **灵感来源**：「滑动变祖器」概念来自 X [@Lichtspektrum](https://x.com/lichtspektrum) 的
-  [liang-intensity-calibrator](https://github.com/Lichtspektrum/liang-intensity-calibrator)（独立实现，未复用其代码）。
+- **灵感与素材来源**：「滑动变祖器」概念与人物图片素材源自 X [@Lichtspektrum](https://x.com/lichtspektrum) 的
+  [liang-intensity-calibrator](https://github.com/Lichtspektrum/liang-intensity-calibrator)
+  （原项目 31 级强度轴；本插件把档位接到 DeepSeek 实时数据上，独立实现、未复用其代码）。
+  运行时素材已内嵌，安装后无需额外下载；6 档立绘锚点直接切换，不做图片交叉渐变。
 - **立绘**：随仓库附带原始六格梗图（1080×180，渲染成 156px 透明贴纸雪碧图内嵌在 `lib/client.js`）。
   图片中人物的版权/肖像权归原权利人，仅作玩梗/评论引用，**不属于 MIT 许可**；如权利人要求会移除。
   想换成立绘方案：

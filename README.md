@@ -243,19 +243,25 @@ node scripts/embed-meme.mjs path/to/own-six.png      # 换自己的六格图
 
 > 提交前请确认你对所用素材拥有权利；公开仓库里的梗图随时可以被移除，但代码不受影响。
 
-## 致谢 / Credits
+## 灵感与素材来源 / Credits
 
-- 「滑动变祖器」的概念与「小难梁 → … → 梁祖」六格升格梗，灵感来自 X 上的
-  [@Lichtspektrum](https://x.com/lichtspektrum) 的原项目
-  [Lichtspektrum/liang-intensity-calibrator](https://github.com/Lichtspektrum/liang-intensity-calibrator)
-  （31 级梁系强度校准器，代码 MIT；其 README 明确说明人像素材不随 MIT 共享、复用前需确认肖像与素材使用权）。
-- 本仓库是一个独立的 DSH 实现：把滑杆接到 DeepSeek 的实时状态、模型评分与价格上；
-  未复用原项目代码。六档 SVG 立绘为本仓库原创，随仓库的梗图贴纸为网络流传版本（非 MIT，见「立绘与版权」）。
-- 数据来源：[DeepSeek Status](https://status.deepseek.com/)、
-  [Artificial Analysis](https://artificialanalysis.ai/leaderboards/models)、
-  [OpenRouter](https://openrouter.ai/api/v1/models)。
-- 也感谢 [Awesome Sliders](https://github.com/Lichtspektrum/liang-intensity-calibrator#awesome-sliders)
-  里各位二创作者带来的灵感。
+本插件的「滑动变祖」视觉概念与人物图片素材源自
+[Lichtspektrum/liang-intensity-calibrator](https://github.com/Lichtspektrum/liang-intensity-calibrator)
+（X: [@Lichtspektrum](https://x.com/lichtspektrum)，31 级梁系强度校准器，代码 MIT；
+其 README 明确说明人像素材不随 MIT 共享、复用前需确认肖像与素材使用权）。
+
+原项目用滑杆表示 0–30 的「梁系强度」；本插件在这个概念上换了个接入方式：
+**把滑杆位置接到 DeepSeek 的实时数据上**（状态分级 / AA 评分 / OpenRouter 价格），算出变祖指数后再落到六档。
+本项目是独立的 DSH 实现，未复用原项目代码；也是
+[Awesome Sliders](https://github.com/Lichtspektrum/liang-intensity-calibrator#awesome-sliders)
+二创列表里没有的那一类——不改模型选择，只把「现在几祖了」做成实时挂件。
+
+运行时素材已内嵌在插件中，安装后无需额外下载；当前接入 6 档立绘锚点，切换档位时直接替换锚点，**不做图片交叉渐变**。
+梗图贴纸不属于 MIT（见「立绘与版权」）；六档 SVG 立绘为原创。
+
+其他数据来源：[DeepSeek Status](https://status.deepseek.com/)、
+[Artificial Analysis](https://artificialanalysis.ai/leaderboards/models)、
+[OpenRouter](https://openrouter.ai/api/v1/models)。
 
 ## 贡献
 
