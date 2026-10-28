@@ -1,0 +1,4 @@
+# 自动变祖器：只新增自己的两行（Host 采样 + Web UI 挂件），不改任何官方行。
+- insert:
+    - id: auto-lwf-sr
+      name: dsh-plugin-auto-lwf-sr

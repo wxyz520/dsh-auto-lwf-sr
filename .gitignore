@@ -1,0 +1,9 @@
+node_modules/
+.DS_Store
+*.log
+
+# Personal meme artwork (copyright belongs to its original owners; never commit it)
+art/meme/
+
+# Local research scratch notes
+research/

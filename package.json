@@ -1,0 +1,20 @@
+{
+  "name": "dsh-auto-lwf-sr-dev",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Development harness for the dsh-auto-lwf-sr DSH plugin",
+  "scripts": {
+    "check": "node --check plugin/lib/index.js && node --check plugin/lib/client.js && node --check plugin/lib/status.js && node --check plugin/lib/benchmarks.js && node --check plugin/lib/pricing.js && node --check plugin/lib/score.js",
+    "test": "node test/score.test.mjs",
+    "test:ui": "node test/ui-smoke.mjs"
+  },
+  "devDependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "jsdom": "^24.1.0"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <!-- 自动变祖器 plugin icon: sliding rheostat (滑动变阻器) + golden crown above the slider knob. -->
+  <rect width="256" height="256" rx="56" fill="#1B2440"/>
+  <circle cx="128" cy="150" r="92" fill="#22304F"/>
+  <circle cx="128" cy="108" r="58" fill="#F5C542" opacity=".10"/>
+
+  <!-- crown above the knob -->
+  <path d="M98 110 L98 90 L114 100 L128 74 L142 100 L158 90 L158 110 Z" fill="#F5C542"/>
+  <rect x="96" y="108" width="64" height="13" rx="4" fill="#E0A72E"/>
+  <circle cx="114" cy="114.5" r="3" fill="#FFF0B8"/>
+  <circle cx="128" cy="114.5" r="3.4" fill="#FFF0B8"/>
+  <circle cx="142" cy="114.5" r="3" fill="#FFF0B8"/>
+
+  <!-- rheostat track with coil ticks -->
+  <rect x="44" y="156" width="168" height="20" rx="10" fill="#33456D"/>
+  <rect x="52" y="161" width="5" height="10" rx="2" fill="#5A72A6"/>
+  <rect x="66" y="161" width="5" height="10" rx="2" fill="#5A72A6"/>
+  <rect x="80" y="161" width="5" height="10" rx="2" fill="#5A72A6"/>
+  <rect x="94" y="161" width="5" height="10" rx="2" fill="#5A72A6"/>
+  <rect x="108" y="161" width="5" height="10" rx="2" fill="#5A72A6"/>
+  <rect x="122" y="161" width="5" height="10" rx="2" fill="#5A72A6"/>
+  <rect x="136" y="161" width="5" height="10" rx="2" fill="#5A72A6"/>
+  <rect x="150" y="161" width="5" height="10" rx="2" fill="#5A72A6"/>
+  <rect x="164" y="161" width="5" height="10" rx="2" fill="#5A72A6"/>
+  <rect x="178" y="161" width="5" height="10" rx="2" fill="#5A72A6"/>
+  <rect x="192" y="161" width="5" height="10" rx="2" fill="#5A72A6"/>
+
+  <!-- two terminals -->
+  <circle cx="42" cy="166" r="13" fill="#F5C542"/>
+  <circle cx="214" cy="166" r="13" fill="#F5C542"/>
+  <circle cx="42" cy="166" r="5.5" fill="#1B2440"/>
+  <circle cx="214" cy="166" r="5.5" fill="#1B2440"/>
+
+  <!-- slider knob -->
+  <rect x="106" y="128" width="44" height="46" rx="12" fill="#F5C542"/>
+  <rect x="106" y="146" width="44" height="9" fill="#E0A72E"/>
+  <rect x="112" y="132" width="8" height="10" rx="4" fill="#FFE39A"/>
+
+  <!-- scale ticks under the track -->
+  <path d="M84 190 v10 M128 190 v14 M172 190 v10" stroke="#41567F" stroke-width="7" stroke-linecap="round"/>
+</svg>
