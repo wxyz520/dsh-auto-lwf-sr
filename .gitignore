@@ -7,3 +7,6 @@ art/meme/liang-six-panels.jpeg
 
 # Local research scratch notes
 research/
+
+# local SSH scratch for this repo
+.git-ssh/
