@@ -315,8 +315,9 @@ const TIER_ART = ART_TIERS.map(({ id, name, svg }) => ({
         back: '返回',
         settingMode: '显示形式',
         settingSize: '立绘大小',
-        settingSizeHint: '仅「头像」模式生效，拖动滑杆实时预览',
-        settingSizePillHint: '切到「头像」模式后可调整立绘大小',
+        settingSizeHint: '拖动滑杆调整头像模式的立绘大小',
+        settingPillSize: '胶囊大小',
+        settingPillHint: '按比例缩放胶囊的立绘、文字与内边距',
         settingPosition: '位置',
         resetPosition: '重置位置',
         dragHintWidget: '直接拖动右下角立绘/胶囊即可移动，位置会记住',
@@ -372,8 +373,9 @@ const TIER_ART = ART_TIERS.map(({ id, name, svg }) => ({
         back: 'back',
         settingMode: 'display',
         settingSize: 'artwork size',
-        settingSizeHint: 'only applies to avatar mode; drag the slider to preview',
-        settingSizePillHint: 'switch to avatar mode to resize the artwork',
+        settingSizeHint: 'drag to resize the avatar-mode artwork',
+        settingPillSize: 'pill size',
+        settingPillHint: 'scales the pill artwork, text and padding proportionally',
         settingPosition: 'position',
         resetPosition: 'reset',
         dragHintWidget: 'drag the artwork or pill to move it; the position is remembered',
@@ -734,6 +736,8 @@ const TIER_ART = ART_TIERS.map(({ id, name, svg }) => ({
       const stability = snap ? snap.factors.stability : null
       const statusLevel = stability ? String(stability.level || stability.overall || 'operational') : 'operational'
       const statusTone = statusColor(statusLevel)
+      const pillAvatar = Math.round(clamp(avatarSize * 0.41, 26, 64))
+      const pillScale = pillAvatar / 36
 
       const close = useCallback(() => {
         setShown(false)
@@ -986,19 +990,19 @@ const TIER_ART = ART_TIERS.map(({ id, name, svg }) => ({
       }, label)
 
       const chipContent = [
-        h(TierImage, { key: 'img', index: shownIndex, size: 36, className: 'lwf-pop', ringColor: amber + '66' }),
-        h('div', { key: 'text', style: { display: 'flex', alignItems: 'center', gap: 7, minWidth: 0 } }, [
+        h(TierImage, { key: 'img', index: shownIndex, size: pillAvatar, className: 'lwf-pop', ringColor: amber + '66' }),
+        h('div', { key: 'text', style: { display: 'flex', alignItems: 'center', gap: Math.round(7 * pillScale), minWidth: 0 } }, [
           h('span', {
             key: 'live',
             title: statusLabel(statusLevel, locale),
             style: { width: 6, height: 6, borderRadius: '50%', background: statusTone, flex: '0 0 auto', boxShadow: statusLevel === 'operational' ? 'none' : '0 0 0 3px rgba(255, 176, 32, 0.18)' },
           }),
-          h('span', { key: 'name', style: { fontSize: 14, fontWeight: 750, color: amber, whiteSpace: 'nowrap' } }, TIERS[shownIndex].name),
+          h('span', { key: 'name', style: { fontSize: Math.round(14 * pillScale), fontWeight: 750, color: amber, whiteSpace: 'nowrap' } }, TIERS[shownIndex].name),
           snap
-            ? h('span', { key: 'score', style: { fontSize: 12, color: T.text, fontVariantNumeric: 'tabular-nums', fontWeight: 600 } }, fmtScore(animatedScore))
-            : h('span', { key: 'status', style: { fontSize: 10.5, color: error ? T.err : T.dim, whiteSpace: 'nowrap' } }, pending ? t.warmup : t.failed),
+            ? h('span', { key: 'score', style: { fontSize: Math.round(12 * pillScale), color: T.text, fontVariantNumeric: 'tabular-nums', fontWeight: 600 } }, fmtScore(animatedScore))
+            : h('span', { key: 'status', style: { fontSize: Math.round(10.5 * pillScale), color: error ? T.err : T.dim, whiteSpace: 'nowrap' } }, pending ? t.warmup : t.failed),
           snap && trend !== 0
-            ? h('span', { key: 'trend', style: { fontSize: 10, color: trend > 0 ? T.ok : T.err, fontVariantNumeric: 'tabular-nums' } }, (trend > 0 ? '▲' : '▼') + Math.abs(trend).toFixed(1))
+            ? h('span', { key: 'trend', style: { fontSize: Math.round(10 * pillScale), color: trend > 0 ? T.ok : T.err, fontVariantNumeric: 'tabular-nums' } }, (trend > 0 ? '▲' : '▼') + Math.abs(trend).toFixed(1))
             : null,
         ]),
       ]
@@ -1057,13 +1061,13 @@ const TIER_ART = ART_TIERS.map(({ id, name, svg }) => ({
               pointerEvents: 'auto',
               display: 'flex',
               alignItems: 'center',
-              gap: 8,
+              gap: Math.round(8 * pillScale),
               font: 'inherit',
               background: T.bg,
               color: T.text,
               border: '1px solid ' + T.border,
-              borderRadius: 16,
-              padding: '6px 12px 6px 7px',
+              borderRadius: Math.round(16 * pillScale),
+              padding: Math.round(6 * pillScale) + 'px ' + Math.round(12 * pillScale) + 'px ' + Math.round(6 * pillScale) + 'px ' + Math.round(7 * pillScale) + 'px',
               cursor: widgetDragging ? 'grabbing' : 'grab',
               touchAction: 'none',
               userSelect: 'none',
@@ -1133,8 +1137,8 @@ const TIER_ART = ART_TIERS.map(({ id, name, svg }) => ({
         ]),
         h('div', { key: 'set-size', style: { padding: '18px 0', borderTop: '1px solid ' + T.border } }, [
           h('div', { key: 'line', style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', fontSize: 12, fontWeight: 700, marginBottom: 10 } }, [
-            h('span', { key: 'l' }, t.settingSize),
-            h('span', { key: 'v', style: { fontSize: 10.5, color: T.dim, fontVariantNumeric: 'tabular-nums' } }, avatarSize + ' px'),
+            h('span', { key: 'l' }, mode === 'sticker' ? t.settingSize : t.settingPillSize),
+            h('span', { key: 'v', style: { fontSize: 10.5, color: T.dim, fontVariantNumeric: 'tabular-nums' } }, (mode === 'sticker' ? avatarSize : pillAvatar) + ' px'),
           ]),
           h('input', {
             key: 'slider',
@@ -1144,19 +1148,17 @@ const TIER_ART = ART_TIERS.map(({ id, name, svg }) => ({
             step: 4,
             value: avatarSize,
             'data-lwf-size': 'true',
-            disabled: mode !== 'sticker',
             onInput: event => setAvatarSize(clamp(Number(event.target.value) || 88, SIZE_MIN, SIZE_MAX)),
             onChange: event => setAvatarSize(clamp(Number(event.target.value) || 88, SIZE_MIN, SIZE_MAX)),
             style: {
               width: '100%',
               marginTop: 2,
               accentColor: amber,
-              cursor: mode === 'sticker' ? 'pointer' : 'not-allowed',
-              opacity: mode === 'sticker' ? 1 : 0.45,
+              cursor: 'pointer',
             },
           }),
           h('div', { key: 'hint', style: { marginTop: 8, fontSize: 10.5, color: T.dim, lineHeight: 1.6 } },
-            mode === 'sticker' ? t.settingSizeHint : t.settingSizePillHint),
+            mode === 'sticker' ? t.settingSizeHint : t.settingPillHint),
         ]),
         h('div', { key: 'set-pos', style: { padding: '18px 0', borderTop: '1px solid ' + T.border } }, [
           h('div', { key: 'line', style: { display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, fontWeight: 700 } }, [

@@ -179,8 +179,19 @@ assert(settingsEl.closest('[data-lwf-panel]'), 'settings lives inside the panel'
 assert(detailBody && !detailBody.contains(settingsEl), 'settings is not nested in the hidden detail body')
 assert(settingsEl.style.padding === '16px 20px 18px', 'settings view has generous padding')
 assert(panelNode().textContent.includes('显示形式'), 'settings: display mode row')
-assert(panelNode().textContent.includes('立绘大小'), 'settings: artwork size row')
+assert(panelNode().textContent.includes('胶囊大小'), 'settings: pill size row')
 assert(panelNode().textContent.includes('重置位置'), 'settings: reset position')
+
+// the same slider also scales the pill
+const pillSlider = document.querySelector('[data-lwf-size]')
+assert(pillSlider && !pillSlider.disabled, 'size slider works in pill mode')
+const valueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set
+valueSetter.call(pillSlider, '140')
+pillSlider.dispatchEvent(new window.Event('input', { bubbles: true }))
+pillSlider.dispatchEvent(new window.Event('change', { bubbles: true }))
+await flush(80)
+assert(window.localStorage.getItem('dsh.auto-lwf-sr.size') === '140', 'pill size persisted')
+assert(document.querySelector('[data-lwf-chip] div').style.width === '57px', 'pill artwork scaled to 57px')
 
 const stickerSwitch = document.querySelector('[data-lwf-mode-switch="sticker"]')
 assert(stickerSwitch, 'avatar mode switch exists in settings')
@@ -195,7 +206,6 @@ assert(JSON.parse(window.localStorage.getItem('dsh.auto-lwf-sr.display')) === 's
 
 const slider = document.querySelector('[data-lwf-size]')
 assert(slider, 'artwork size slider exists')
-const valueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set
 valueSetter.call(slider, '120')
 slider.dispatchEvent(new window.Event('input', { bubbles: true }))
 slider.dispatchEvent(new window.Event('change', { bubbles: true }))
