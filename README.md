@@ -80,6 +80,9 @@ plugin_manager install_bundle target=/absolute/path/to/dsh-auto-lwf-sr/plugin
 #          选择上面的 plugin/ 目录
 ```
 
+> ⚠️ `target` 必须指向 clone 下来的 **`plugin/` 子目录**，不是仓库根目录。
+> 仓库根目录是开发脚手架（`package.json` 只有测试脚本、没有 `dsh.bundle`），装根目录会失败或看起来"没装上"。
+
 安装成功后右下角出现挂件（默认留出底部的一段空间，避免和右下角已有的挂件挤在一起；被挡住就直接拖开）。
 
 ```text
@@ -167,7 +170,11 @@ plugin_manager remove_bundle target=dsh-plugin-auto-lwf-sr
 ## 常见问题
 
 **装完右下角没东西？**
-先完全退出 DSH 再打开（Host 需要重启加载）；确认当前是 desktop profile，并在插件管理里确认 `dsh-plugin-auto-lwf-sr` 已启用。
+先完全退出 DSH 再打开（Host 需要重启加载）；确认当前是 desktop profile。
+
+如果 DSH 升级过、或者之前手动关过，**第三方 bundle 可能会被自动禁用**：
+设置 → 插件（Plugin Manager）→ Bundles，把「自动变祖器 / dsh-plugin-auto-lwf-sr」重新打开即可。
+（我这边遇到过 DSH 更新到 0.2.1-rc.3 后，三个第三方 bundle 全被关掉；重新启用后 Host 行 `active`、挂件恢复。）
 
 **分数长时间不动？**
 面板页脚有时间戳（精确到秒）。若显示「部分数据源降级」，说明状态/榜单/价格接口暂时不可用，会沿用上次成功值；点「↻」可强制重采。
