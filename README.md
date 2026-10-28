@@ -5,8 +5,6 @@
 [![Node](https://img.shields.io/badge/node-%E2%89%A522-339933.svg)](package.json)
 [![DSH](https://img.shields.io/badge/DeepSeek%20Harness-desktop-4D6BFE.svg)](https://github.com/deepseek-ai/deepseek-harness)
 
-![六档立绘（梗图贴纸版）：小难梁 → 牢梁 → 梁子 → 梁圣 → 梁神 → 梁祖](art/meme/liang-six-stickers.png)
-
 一个住在 **DeepSeek Harness（DSH）** 右下角的实时挂件：持续读取 DeepSeek 服务状态、模型评分和 token 价格，
 算出一个 0–100 的「变祖指数」，滑片停在 **小难梁 → 牢梁 → 梁子 → 梁圣 → 梁神 → 梁祖** 六档之一。
 
