@@ -19,7 +19,23 @@ import { fileURLToPath } from 'node:url'
 const input = process.argv[2]
 if (!input) {
   console.error('usage: node scripts/embed-meme.mjs path/to/six-panels.png')
+  console.error('       node scripts/embed-meme.mjs --reset   # back to the original SVG artwork')
   process.exit(1)
+}
+
+const CONTENT_MARKER = /const MEME_SPRITE = (?:''|'data:[^']*')/
+
+if (input === '--reset') {
+  const target = fileURLToPath(new URL('../plugin/lib/client.js', import.meta.url))
+  const source = readFileSync(target, 'utf8')
+  const replaced = source.replace(CONTENT_MARKER, "const MEME_SPRITE = ''")
+  if (replaced === source) {
+    console.error('could not find the MEME_SPRITE marker in plugin/lib/client.js')
+    process.exit(1)
+  }
+  writeFileSync(target, replaced)
+  console.log('reset to the original SVG artwork')
+  process.exit(0)
 }
 
 const extension = extname(input).toLowerCase()
@@ -29,7 +45,7 @@ const dataUrl = `data:${mime};base64,${bytes.toString('base64')}`
 
 const target = fileURLToPath(new URL('../plugin/lib/client.js', import.meta.url))
 const source = readFileSync(target, 'utf8')
-const replaced = source.replace(/const MEME_SPRITE = (?:''|'data:[^']*')/, `const MEME_SPRITE = '${dataUrl}'`)
+const replaced = source.replace(CONTENT_MARKER, `const MEME_SPRITE = '${dataUrl}'`)
 if (replaced === source) {
   console.error('could not find the MEME_SPRITE marker in plugin/lib/client.js')
   process.exit(1)

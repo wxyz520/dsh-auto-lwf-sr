@@ -19,3 +19,12 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+---
+
+Artwork exception: the meme image in art/meme/ and the sprite embedded in
+plugin/lib/client.js are NOT covered by the MIT license above. Copyright and
+likeness rights in that meme belong to their respective owners; it is included
+for parody/commentary purposes only and will be removed on request. All other
+files (code, UI, the original six-tier SVG artwork in art/tiers.js, the icon)
+are MIT licensed.

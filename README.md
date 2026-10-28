@@ -13,13 +13,15 @@
 > **English**: a live score widget for the DeepSeek Harness desktop UI. It reads the public DeepSeek status API,
 > the Artificial Analysis leaderboard and OpenRouter prices, turns them into a 0–100 "ancestor index", and maps it
 > onto six meme tiers. No model calls, no telemetry; the snapshot route is owner-only on the local web server.
+> The bundled six-panel meme is included for parody purposes only; its rights belong to the original owners.
 
 ## 这梗是什么
 
 初中物理器材「**滑动变阻器**」被谐音成「**滑动变祖器**」——滑片一动，辈分就涨。配上中文互联网那张
 梁文锋「六格升格」梗图（小难梁 → 牢梁 → 梁子 → 梁神 → 梁圣 → 梁祖），就成了这个挂件：**指数越高，封号越祖**。
 
-> 仓库不包含任何梗图素材，公开版使用原创六格 SVG 立绘（见「立绘与版权」）。
+> 仓库随附的六格梗图仅作玩梗/评论引用，版权与肖像权归原权利人（见「立绘与版权」）；
+> 也可以用一条命令切回原创六格 SVG 立绘。
 
 ## 六档
 
@@ -194,6 +196,7 @@ plugin_manager remove_bundle target=dsh-plugin-auto-lwf-sr
 - 事故历史只保留内存中的最近 120 个采样点，DSH 重启后走势清空；
 - 「任一组件异常即按最差档封顶」比较粗——搜索/抓取服务的小异常也会拖累总分，后续可加组件权重（API/对话服务权重更高）；
 - 暂未做事故持续时长衰减（挂得越久扣得越狠）；
+- 随仓库的梗图属于引用素材（非 MIT），如权利人要求会移除；
 - 只支持 DSH desktop 的 Web UI；暂无 npm 包。
 
 ## 开发
@@ -216,28 +219,31 @@ plugin/                  DSH 插件包（package.json + lib/ + locale/ + icon.sv
   lib/score.js           评分模型与六档映射
   lib/client.js          右下角挂件 UI
   README.md              插件级详细文档
-art/tiers.js             原创六档立绘
+art/tiers.js             原创六档 SVG 立绘
+art/meme/                随仓库的六格梗图（非 MIT，仅玩梗引用）
 scripts/embed-meme.mjs   本地内嵌梗图
 test/                    单元测试 + jsdom 冒烟测试
 ```
 
 ## 立绘与版权
 
-仓库自带的六档立绘是**原创 SVG**（[`art/tiers.js`](art/tiers.js)，MIT），插件图标也是原创。
-
-想在本地换成六格梗图版（仅供个人使用）：准备一张横向六格图（例如 1080×180，六格各 180×180），执行：
+- **代码、UI、图标、原创六格 SVG 立绘**（[`art/tiers.js`](art/tiers.js)）均为 MIT。
+- **随仓库的六格梗图**（`art/meme/liang-six-stickers.png`，渲染成 156px 透明贴纸雪碧图内嵌在 `lib/client.js`）：
+  源自 36kr 报道的配图，画面中的人物与图片版权/肖像权归原权利人，**不在 MIT 许可范围内**，
+  此处仅作玩梗/评论用途；如权利人要求，会立即移除（见 [art/meme/README.md](art/meme/README.md)）。
+- 想切回原创 SVG 立绘（或换成自己的图）：
 
 ```bash
-node scripts/embed-meme.mjs path/to/six-panels.png
+node scripts/embed-meme.mjs --reset                  # 回到原创 SVG 立绘
+node scripts/embed-meme.mjs path/to/own-six.png      # 换自己的六格图
 ```
 
-它会把图片内嵌进 `plugin/lib/client.js`。**不要提交这次改动**：梗图的版权和肖像权由使用者自行承担，
-公开仓库不包含任何网络梗图素材；`git checkout -- plugin/lib/client.js` 可还原。
+> 提交前请确认你对所用素材拥有权利；公开仓库里的梗图随时可以被移除，但代码不受影响。
 
 ## 贡献
 
 欢迎 issue / PR：数据源解析修补、组件权重、时长衰减、英文文案、截图都欢迎。
-提交前请跑 `npm run check && npm test && npm run test:ui`；**不要提交任何梗图素材**。
+提交前请跑 `npm run check && npm test && npm run test:ui`；更换/新增图片素材前请确认你有权使用。
 
 ## 免责声明
 

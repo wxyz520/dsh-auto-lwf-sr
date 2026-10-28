@@ -2,8 +2,8 @@ node_modules/
 .DS_Store
 *.log
 
-# Personal meme artwork (copyright belongs to its original owners; never commit it)
-art/meme/
+# Raw source image of the meme (the rendered sprite is committed instead)
+art/meme/liang-six-panels.jpeg
 
 # Local research scratch notes
 research/
