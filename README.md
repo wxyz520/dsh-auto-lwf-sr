@@ -15,6 +15,14 @@
 > onto six meme tiers. No model calls, no telemetry; the snapshot route is owner-only on the local web server.
 > The bundled six-panel meme is included for parody purposes only; its rights belong to the original owners.
 
+## 效果图
+
+| 胶囊（收起态） | 二级面板（展开态） |
+| :---: | :---: |
+| <img src="docs/preview-chip.jpg" width="220" alt="胶囊：梁神 81.7"> | <img src="docs/preview-panel.jpg" width="360" alt="二级面板：变祖指数 83.0，梁祖"> |
+
+> 实拍（2026-10-28，light 主题）：胶囊上能看到实时状态点与涨跌；面板里是稳定度 50/50、实力 15/30、价格 18/20 的拆解，以及六档滑轨。
+
 ## 这梗是什么
 
 初中物理器材「**滑动变阻器**」被谐音成「**滑动变祖器**」——滑片一动，辈分就涨。配上中文互联网那张
