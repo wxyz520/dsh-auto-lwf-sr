@@ -546,9 +546,10 @@ const TIER_ART = ART_TIERS.map(({ id, name, svg }) => ({
       }, [ref, active, onClose])
     }
 
-    function TierImage({ index, size, radius, ringColor, className, style }) {
+    function TierImage({ index, size, radius, className, style }) {
       const safe = Math.max(0, Math.min(TIERS.length - 1, index))
       const rounded = radius === undefined ? Math.round(size * 0.28) : radius
+      const frameShadow = '0 0 0 1px ' + T.border2 + ', 0 2px 8px rgba(0,0,0,.18)'
       if (MEME_SPRITE) {
         return h('div', {
           className,
@@ -562,7 +563,7 @@ const TIER_ART = ART_TIERS.map(({ id, name, svg }) => ({
             backgroundSize: size * TIERS.length + 'px ' + size + 'px',
             backgroundPosition: -safe * size + 'px 0px',
             backgroundRepeat: 'no-repeat',
-            boxShadow: ringColor ? '0 0 0 2px ' + ringColor + ', 0 2px 6px rgba(0,0,0,.25)' : '0 2px 6px rgba(0,0,0,.18)',
+            boxShadow: frameShadow,
             ...style,
           },
         })
@@ -574,7 +575,7 @@ const TIER_ART = ART_TIERS.map(({ id, name, svg }) => ({
         className,
         'aria-hidden': true,
         focusable: 'false',
-        style: { display: 'block', flex: '0 0 auto', borderRadius: rounded, ...(style || {}) },
+        style: { display: 'block', flex: '0 0 auto', borderRadius: rounded, boxShadow: frameShadow, ...(style || {}) },
         dangerouslySetInnerHTML: { __html: TIER_ART[safe] ? TIER_ART[safe].svg : '' },
       })
     }
@@ -990,7 +991,7 @@ const TIER_ART = ART_TIERS.map(({ id, name, svg }) => ({
       }, label)
 
       const chipContent = [
-        h(TierImage, { key: 'img', index: shownIndex, size: pillAvatar, className: 'lwf-pop', ringColor: amber + '66' }),
+        h(TierImage, { key: 'img', index: shownIndex, size: pillAvatar, className: 'lwf-pop' }),
         h('div', { key: 'text', style: { display: 'flex', alignItems: 'center', gap: Math.round(7 * pillScale), minWidth: 0 } }, [
           h('span', {
             key: 'live',
@@ -1067,7 +1068,7 @@ const TIER_ART = ART_TIERS.map(({ id, name, svg }) => ({
               color: T.text,
               border: '1px solid ' + T.border,
               borderRadius: Math.round(16 * pillScale),
-              padding: Math.round(6 * pillScale) + 'px ' + Math.round(12 * pillScale) + 'px ' + Math.round(6 * pillScale) + 'px ' + Math.round(7 * pillScale) + 'px',
+              padding: Math.round(4 * pillScale) + 'px ' + Math.round(12 * pillScale) + 'px ' + Math.round(4 * pillScale) + 'px ' + Math.round(5 * pillScale) + 'px',
               cursor: widgetDragging ? 'grabbing' : 'grab',
               touchAction: 'none',
               userSelect: 'none',
@@ -1275,7 +1276,7 @@ const TIER_ART = ART_TIERS.map(({ id, name, svg }) => ({
         ]),
         h('div', { key: 'body', 'data-lwf-body': 'true', style: { padding: '0 20px 18px', overflowY: 'auto', position: 'relative', display: showSettings ? 'none' : 'block' } }, [
           h('div', { key: 'hero', style: { display: 'flex', gap: 12, alignItems: 'center' } }, [
-            h(TierImage, { key: 'art', index: shownIndex, size: 74, radius: 16, ringColor: amber + '77', className: preview ? 'lwf-pop' : undefined }),
+            h(TierImage, { key: 'art', index: shownIndex, size: 74, radius: 16, className: preview ? 'lwf-pop' : undefined }),
             h('div', { key: 'info', style: { minWidth: 0, flex: 1 } }, [
               h('div', { key: 'nameRow', style: { display: 'flex', alignItems: 'baseline', gap: 8 } }, [
                 h('span', { key: 'n', style: { fontSize: 20, fontWeight: 800, color: amber } }, TIERS[shownIndex].name),
