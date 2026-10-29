@@ -1,6 +1,6 @@
 {
   "name": "dsh-auto-lwf-sr-dev",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "private": true,
   "type": "module",
   "description": "Development harness for the dsh-auto-lwf-sr DSH plugin",
