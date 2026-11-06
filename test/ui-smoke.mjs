@@ -61,7 +61,7 @@ function buildFixtureSnapshot() {
   const snapshot = computeSnapshot({ status, benchmarks, pricing })
   snapshot.balance = {
     status: 'ready',
-    wallets: [{ currency: 'CNY', balance: '12.34' }],
+    wallets: [{ currency: 'CNY', balance: '42.1089382800000000' }],
     bonusWallets: [{ currency: 'CNY', balance: '3.00' }],
     fetchedAt: Date.now(),
   }
@@ -147,7 +147,8 @@ assert(!document.querySelector('[data-lwf-track]'), 'no slider in the outer laye
 chip.dispatchEvent(new window.MouseEvent('click', { bubbles: true }))
 await flush(140)
 assert(panelNode(), 'popover opens on click')
-assert(panelNode().textContent.includes('¥12.34'), 'header shows the wallet balance')
+assert(panelNode().textContent.includes('¥42.11'), 'hero shows the rounded wallet balance')
+assert(!panelNode().textContent.includes('42.108938'), 'wallet balance is rounded to two decimals')
 assert(panelNode().textContent.includes('因子'), 'panel has factor tab')
 assert(panelNode().textContent.includes('稳定度'), 'factor tab content rendered')
 assert(panelNode().textContent.includes('拖动滑片试滑'), 'manual slider hint present')

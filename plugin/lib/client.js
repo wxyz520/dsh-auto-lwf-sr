@@ -408,6 +408,18 @@ const TIER_ART = ART_TIERS.map(({ id, name, svg }) => ({
     const clamp01 = value => Math.min(1, Math.max(0, value))
     const fmtScore = value => (Number.isFinite(value) ? value.toFixed(1) : '—')
     const fmtUsd = value => (Number.isFinite(value) ? '$' + value.toFixed(2) : '—')
+
+    /** Wallet balances arrive as long decimal strings; show two decimals with separators. */
+    function formatMoney(value, currency) {
+      const symbol = currency === 'USD' ? '$' : '¥'
+      const number = Number(value)
+      if (!Number.isFinite(number)) return symbol + String(value)
+      try {
+        return symbol + number.toLocaleString('zh-CN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+      } catch {
+        return symbol + number.toFixed(2)
+      }
+    }
     const fmtPct = value => (Number.isFinite(value) ? Math.round(value * 100) + '%' : '—')
 
     function formatClock(timestamp, locale) {
@@ -1118,29 +1130,29 @@ const TIER_ART = ART_TIERS.map(({ id, name, svg }) => ({
 
       // signed-in DeepSeek wallet balances (optional; hidden while signed out / unavailable)
       const walletInfo = snap && snap.balance && snap.balance.status === 'ready' ? snap.balance : null
-      const walletText = walletInfo && Array.isArray(walletInfo.wallets) && walletInfo.wallets.length > 0
-        ? walletInfo.wallets.map(wallet => (wallet.currency === 'USD' ? '$' : '¥') + wallet.balance).join(' · ')
-        : ''
+      const walletLabels = walletInfo && Array.isArray(walletInfo.wallets)
+        ? walletInfo.wallets.map(wallet => formatMoney(wallet.balance, wallet.currency))
+        : []
       const bonusText = walletInfo && Array.isArray(walletInfo.bonusWallets) && walletInfo.bonusWallets.length > 0
-        ? walletInfo.bonusWallets.map(wallet => (wallet.currency === 'USD' ? '$' : '¥') + wallet.balance).join(' · ')
+        ? walletInfo.bonusWallets.map(wallet => formatMoney(wallet.balance, wallet.currency)).join(' · ')
         : ''
-      const balanceNode = walletText
-        ? h('span', {
-            key: 'balance',
-            title: t.balance + ' ' + walletText
-              + (bonusText ? ' · ' + t.bonus + ' ' + bonusText : '')
-              + (Number.isFinite(walletInfo.fetchedAt) ? ' · ' + formatClock(walletInfo.fetchedAt, locale) : ''),
-            style: {
-              fontSize: 10.5,
-              color: T.dim,
-              background: T.bg2,
-              border: '1px solid ' + T.border,
-              borderRadius: 7,
-              padding: '3px 7px',
-              fontVariantNumeric: 'tabular-nums',
-              whiteSpace: 'nowrap',
-            },
-          }, t.balance + ' ' + walletText)
+      const walletTitle = walletLabels.length > 0
+        ? t.balance + ' ' + walletLabels.join(' · ')
+          + (bonusText ? ' · ' + t.bonus + ' ' + bonusText : '')
+          + (Number.isFinite(walletInfo.fetchedAt) ? ' · ' + formatClock(walletInfo.fetchedAt, locale) : '')
+        : ''
+      const walletNode = walletLabels.length > 0
+        ? h('div', {
+            key: 'wallet',
+            title: walletTitle,
+            style: { marginLeft: 'auto', display: 'flex', alignItems: 'baseline', gap: 5, paddingLeft: 8, flex: '0 0 auto' },
+          }, [
+            h('span', { key: 'l', style: { fontSize: 10.5, color: T.dim } }, t.balance),
+            h('span', {
+              key: 'v',
+              style: { fontSize: 21, fontWeight: 750, color: T.text, fontVariantNumeric: 'tabular-nums', lineHeight: 1 },
+            }, walletLabels[0]),
+          ])
         : null
 
       const settingsBody = [
@@ -1261,7 +1273,6 @@ const TIER_ART = ART_TIERS.map(({ id, name, svg }) => ({
           h('span', { key: 'dot', className: 'lwf-breathe', title: statusLabel(statusLevel, locale), style: { width: 6, height: 6, borderRadius: '50%', background: statusTone } }),
           h('span', { key: 'title', style: { fontSize: 12.5, fontWeight: 750, letterSpacing: '.02em' } }, showSettings ? t.settings : t.title),
           h('span', { key: 'spacer', style: { flex: 1 } }),
-          balanceNode,
           h('button', {
             key: 'settings',
             type: 'button',
@@ -1316,9 +1327,10 @@ const TIER_ART = ART_TIERS.map(({ id, name, svg }) => ({
               ]),
               h('div', { key: 'tag', style: { fontSize: 11, color: T.dim, marginTop: 1 } },
                 locale === 'zh' ? TIERS[shownIndex].tagline : TIERS[shownIndex].enTagline),
-              h('div', { key: 'scoreRow', style: { display: 'flex', alignItems: 'baseline', gap: 6, marginTop: 6 } }, [
+              h('div', { key: 'scoreRow', style: { display: 'flex', alignItems: 'baseline', gap: 6, marginTop: 6, flexWrap: 'wrap', rowGap: 4 } }, [
                 h('span', { key: 's', style: { fontSize: 26, fontWeight: 750, fontVariantNumeric: 'tabular-nums', lineHeight: 1 } }, fmtScore(animatedScore)),
                 h('span', { key: 'u', style: { fontSize: 10.5, color: T.dim } }, '/100 · ' + t.score),
+                walletNode,
               ]),
             ]),
           ]),
