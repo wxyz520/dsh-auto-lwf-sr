@@ -1145,13 +1145,27 @@ const TIER_ART = ART_TIERS.map(({ id, name, svg }) => ({
         ? h('div', {
             key: 'wallet',
             title: walletTitle,
-            style: { marginLeft: 'auto', display: 'flex', alignItems: 'baseline', gap: 5, paddingLeft: 8, flex: '0 0 auto' },
+            style: {
+              marginLeft: 'auto',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-end',
+              justifyContent: 'center',
+              gap: 2,
+              flex: '0 0 auto',
+              paddingLeft: 12,
+              borderLeft: '1px solid ' + T.border,
+              minWidth: 70,
+            },
           }, [
-            h('span', { key: 'l', style: { fontSize: 10.5, color: T.dim } }, t.balance),
+            h('span', { key: 'l', style: { fontSize: 10, color: T.dim, letterSpacing: '.03em' } }, t.balance),
             h('span', {
               key: 'v',
-              style: { fontSize: 21, fontWeight: 750, color: T.text, fontVariantNumeric: 'tabular-nums', lineHeight: 1 },
+              style: { fontSize: 20, fontWeight: 750, color: T.text, fontVariantNumeric: 'tabular-nums', lineHeight: 1.1 },
             }, walletLabels[0]),
+            bonusText
+              ? h('span', { key: 'b', style: { fontSize: 9.5, color: T.dim, fontVariantNumeric: 'tabular-nums' } }, '+' + t.bonus + ' ' + bonusText)
+              : null,
           ])
         : null
 
@@ -1330,9 +1344,9 @@ const TIER_ART = ART_TIERS.map(({ id, name, svg }) => ({
               h('div', { key: 'scoreRow', style: { display: 'flex', alignItems: 'baseline', gap: 6, marginTop: 6, flexWrap: 'wrap', rowGap: 4 } }, [
                 h('span', { key: 's', style: { fontSize: 26, fontWeight: 750, fontVariantNumeric: 'tabular-nums', lineHeight: 1 } }, fmtScore(animatedScore)),
                 h('span', { key: 'u', style: { fontSize: 10.5, color: T.dim } }, '/100 · ' + t.score),
-                walletNode,
               ]),
             ]),
+            walletNode,
           ]),
           h('div', { key: 'next', style: { marginTop: 10 } }, [
             h('div', { key: 'label', style: { display: 'flex', justifyContent: 'space-between', fontSize: 10.5, color: T.dim, marginBottom: 4 } }, [
