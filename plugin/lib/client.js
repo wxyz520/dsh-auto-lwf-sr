@@ -312,6 +312,8 @@ const TIER_ART = ART_TIERS.map(({ id, name, svg }) => ({
         now: '当前',
         sources: '数据源',
         settings: '设置',
+        balance: '余额',
+        bonus: '赠送',
         back: '返回',
         settingMode: '显示形式',
         settingSize: '立绘大小',
@@ -370,6 +372,8 @@ const TIER_ART = ART_TIERS.map(({ id, name, svg }) => ({
         now: 'now',
         sources: 'sources',
         settings: 'settings',
+        balance: 'balance',
+        bonus: 'bonus',
         back: 'back',
         settingMode: 'display',
         settingSize: 'artwork size',
@@ -1112,6 +1116,33 @@ const TIER_ART = ART_TIERS.map(({ id, name, svg }) => ({
         ? Math.max(0, Math.min(100, ((snap.score - snap.tier.min) / Math.max(1, (snap.score + next.gap) - snap.tier.min)) * 100))
         : 100
 
+      // signed-in DeepSeek wallet balances (optional; hidden while signed out / unavailable)
+      const walletInfo = snap && snap.balance && snap.balance.status === 'ready' ? snap.balance : null
+      const walletText = walletInfo && Array.isArray(walletInfo.wallets) && walletInfo.wallets.length > 0
+        ? walletInfo.wallets.map(wallet => (wallet.currency === 'USD' ? '$' : '¥') + wallet.balance).join(' · ')
+        : ''
+      const bonusText = walletInfo && Array.isArray(walletInfo.bonusWallets) && walletInfo.bonusWallets.length > 0
+        ? walletInfo.bonusWallets.map(wallet => (wallet.currency === 'USD' ? '$' : '¥') + wallet.balance).join(' · ')
+        : ''
+      const balanceNode = walletText
+        ? h('span', {
+            key: 'balance',
+            title: t.balance + ' ' + walletText
+              + (bonusText ? ' · ' + t.bonus + ' ' + bonusText : '')
+              + (Number.isFinite(walletInfo.fetchedAt) ? ' · ' + formatClock(walletInfo.fetchedAt, locale) : ''),
+            style: {
+              fontSize: 10.5,
+              color: T.dim,
+              background: T.bg2,
+              border: '1px solid ' + T.border,
+              borderRadius: 7,
+              padding: '3px 7px',
+              fontVariantNumeric: 'tabular-nums',
+              whiteSpace: 'nowrap',
+            },
+          }, t.balance + ' ' + walletText)
+        : null
+
       const settingsBody = [
         h('div', { key: 'set-mode', style: { padding: '0 0 18px' } }, [
           h('div', { key: 'label', style: { fontSize: 12, fontWeight: 700, marginBottom: 10 } }, t.settingMode),
@@ -1230,6 +1261,7 @@ const TIER_ART = ART_TIERS.map(({ id, name, svg }) => ({
           h('span', { key: 'dot', className: 'lwf-breathe', title: statusLabel(statusLevel, locale), style: { width: 6, height: 6, borderRadius: '50%', background: statusTone } }),
           h('span', { key: 'title', style: { fontSize: 12.5, fontWeight: 750, letterSpacing: '.02em' } }, showSettings ? t.settings : t.title),
           h('span', { key: 'spacer', style: { flex: 1 } }),
+          balanceNode,
           h('button', {
             key: 'settings',
             type: 'button',

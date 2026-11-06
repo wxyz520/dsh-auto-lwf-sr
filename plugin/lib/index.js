@@ -31,6 +31,7 @@ const DEFAULTS = {
   startupDelayMs: 2_000,
   requestTimeoutMs: 15_000,
   catalogStaleMs: 5 * 60_000,
+  balanceRefreshSeconds: 60,
   weights: DEFAULT_WEIGHTS,
 }
 
@@ -69,6 +70,67 @@ export class AutoLwfSrService {
     this.statusFlight = null
     this.catalogFlight = null
     this.refreshFlight = null
+    this.account = null
+    this.balance = null
+    this.balanceFlight = null
+  }
+
+  /** Optional DeepSeek account service; absent in API-key-only profiles. */
+  attachAccount(account) {
+    this.account = account || null
+    if (this.account) {
+      void this.sampleBalance().catch(error => log('balance sample failed:', String(error?.message || error)))
+    }
+  }
+
+  detachAccount() {
+    this.account = null
+  }
+
+  /** Read the signed-in DeepSeek wallet balances (CNY/USD + bonus wallets). */
+  sampleBalance() {
+    if (!this.account) return Promise.resolve(null)
+    if (this.balanceFlight) return this.balanceFlight
+    this.balanceFlight = (async () => {
+      const now = Date.now()
+      try {
+        const timeout = Math.max(3_000, Math.min(this.options.requestTimeoutMs, 8_000))
+        const result = await withTimeout(
+          this.account.getBalance({
+            version: 'dsh-auto-lwf-sr/' + '0.1.4',
+            locale: 'zh-CN',
+            timezoneOffsetSeconds: -new Date().getTimezoneOffset() * 60,
+          }),
+          timeout,
+          'balance',
+        )
+        if (result === null) {
+          this.balance = { status: 'signed-out', fetchedAt: now }
+        } else if (result.status === 'ready') {
+          this.balance = {
+            status: 'ready',
+            wallets: Array.isArray(result.value) ? result.value : [],
+            bonusWallets: Array.isArray(result.bonusWallets) ? result.bonusWallets : [],
+            fetchedAt: now,
+          }
+        } else {
+          this.balance = { status: 'failed', fetchedAt: now }
+        }
+      } catch (error) {
+        this.balance = { status: 'failed', fetchedAt: now, error: String(error?.message || error) }
+      }
+      this.publishBalance()
+      return this.balance
+    })().finally(() => {
+      this.balanceFlight = null
+    })
+    return this.balanceFlight
+  }
+
+  /** Keep the cached snapshot's balance field in step with the wallet sampler. */
+  publishBalance() {
+    if (!this.snapshot) return
+    this.publish({ ...this.snapshot, balance: this.balance })
   }
 
   getSnapshot() {
@@ -159,6 +221,7 @@ export class AutoLwfSrService {
       },
       this.options.weights,
     )
+    snapshot.balance = this.balance
     this.history = snapshot.history
     this.publish(snapshot)
     return snapshot
@@ -178,6 +241,7 @@ export class AutoLwfSrService {
 
   /** On-demand refresh from the UI: status now, catalog in the background when stale. */
   async onDemand() {
+    void this.sampleBalance().catch(error => log('balance sample failed:', String(error?.message || error)))
     const stale = Date.now() - this.catalogAt > this.options.catalogStaleMs
     if (stale) {
       this.sampleCatalog().catch(error => log('catalog refresh failed:', String(error?.message || error)))
@@ -200,6 +264,24 @@ export function apply(ctx, config = {}) {
   const options = { ...DEFAULTS, ...(config && typeof config === 'object' ? config : {}) }
   const service = new AutoLwfSrService(options)
   ctx.provide('autoLwfSr', service)
+
+  const balanceEvery = Math.max(15_000, Number(options.balanceRefreshSeconds) * 1_000)
+  ctx.inject(['deepseekAccount'], (accountCtx) => {
+    const account = accountCtx.deepseekAccount
+    ctx.effect(() => {
+      service.attachAccount(account)
+      const timer = setInterval(() => {
+        if (!service.disposed) {
+          service.sampleBalance().catch(error => log('balance sample failed:', String(error?.message || error)))
+        }
+      }, balanceEvery)
+      if (typeof timer.unref === 'function') timer.unref()
+      return () => {
+        clearInterval(timer)
+        service.detachAccount()
+      }
+    }, 'auto-lwf-sr.balance')
+  })
 
   const statusEvery = Math.max(5_000, Number(options.statusRefreshSeconds) * 1_000)
   const catalogEvery = Math.max(60_000, Number(options.refreshMinutes) * 60_000)
